@@ -13,37 +13,40 @@ app.get('/', (req, res) => {
 });
 
 // user
-let user = {};
+let users = {};
 app.post('/api/users', (req, res) => {
-  user.username = req.body.username
-  user._id = new ObjectId()
-  user.logs = []
+  users.username = req.body.username
+  users._id = new ObjectId()
+  users.logs = []
   res.json({
-    username: user.username,
-    _id: user._id
+    username: users.username,
+    _id: users._id
   })
 });
 
 // exercise
-let exercises = {}
 app.post('/api/users/:_id/exercises', (req, res) => {
-  exercises._id = user._id,
-  exercises.username = user.username,
-  exercises.date = new Date(req.body.date).toDateString(),
-  exercises.duration = req.body.duration,
-  exercises.description = req.body.description
-  user.logs.push(exercises)
-  res.json(exercises)
+  const exercises = {
+    _id: users._id,
+    username: userusername,
+    date: new Date(req.body.date).toDateString(),
+    duration: req.body.duration,
+    description: req.body.description
+  }
+  
+  users.logs.push(exercises);
+
+  res.json(exercises);
 })
 
 // logs
 app.get('/api/users/:_id/logs?', (req, res) => {
-  console.log(user)
+  console.log(users)
   res.json({
-      _id: user._id,
-      username: user.username,
-      count: user.logs.length,
-      log: user.logs
+      _id: users._id,
+      username: users.username,
+      count: users.logs.length,
+      log: users.logs
     }
   )
 })
